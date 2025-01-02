@@ -54,13 +54,14 @@ test('should open cube from Your Cube dashboard section, then click and validate
   await cubeOverviewPage.validateCubeDescription(existingCubeData.description);
 });
 
-test('should add and remove card from cube then validate change log blog post', async ({ page }) => {
+test.only('should add and remove card from cube then validate change log blog post', async ({ page }) => {
   await page.goto('/');
 
   const topNavigationPage = new TopNavigationPage(page);
   await topNavigationPage.userLogin({ testUser1 });
 
   const dashboardPage = new DashboardPage(page);
+  await page.pause();
   await dashboardPage.clickCubeFromYourCube(addRemoveCube.title, addRemoveCube.cardCount, addRemoveCube.followerCount);
 
   const cubeOverviewPage = new CubeOverviewPage(page);
