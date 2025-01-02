@@ -22,13 +22,14 @@ export class CubeOverviewPage {
     this.cubeDescription = this.page.locator('div').filter({ hasText: text }).first();
     await this.cubeDescription.waitFor();
   };
-  // Todo make these more dynamic as part of the add and remove card functions
+
   // Clicks List link from the Cube Overview page
   clickList = async () => {
     await this.listLink.waitFor();
     await this.listLink.click();
     await this.page.waitForURL(/\/list/);
   };
+  // TODO: make these more dynamic as part of the add and remove card functions
   // Validates changelog correctly displays after card is added then removed
   validateNuetralChangeLog = async () => {
     await this.blogPostNuetralChangeLog.waitFor();

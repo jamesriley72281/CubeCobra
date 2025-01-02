@@ -16,6 +16,7 @@ export class DashboardPage {
   }
   // Clicks on a cube displayed on the Dashboard page
   async clickCubeFromYourCube(name: string, cards: string, followers: string) {
+    await this.page.pause();
     this.yourCube = await getYourCube(this.page, name, cards, followers);
     await this.yourCube.waitFor();
     await this.yourCube.click();
