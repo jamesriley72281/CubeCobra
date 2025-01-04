@@ -1,12 +1,12 @@
 export class CubeListPage {
   page: any;
-  cubeCard: any;
   removeFromCubeButton: any;
   saveChangeButton: any;
   editLink: any;
   cardToAddField: any;
   addButton: any;
   overviewLink: any;
+  cubeCard: any;
 
   constructor(page: any) {
     this.page = page;
@@ -18,6 +18,7 @@ export class CubeListPage {
     this.addButton = page.getByRole('button', { name: 'Add' });
     this.overviewLink = page.getByRole('link', { name: 'Overview' });
   }
+
   // Click card on cube list by passing card name as an argument
   clickCard = async (cardName: string) => {
     this.cubeCard = this.page
@@ -27,25 +28,41 @@ export class CubeListPage {
     await this.cubeCard.waitFor();
     await this.cubeCard.click();
   };
-  // Remove card from opened card modal
-  removefromCube = async () => {
-    await this.removeFromCubeButton.waitFor();
-    await this.removeFromCubeButton.click();
-    await this.saveChangeButton.waitFor();
-    await this.saveChangeButton.click();
-  };
-  // Add card to cube by passing card name as an argument
-  addToCube = async (cardName) => {
-    await this.page.waitForTimeout(3000);
+
+  // Remove cards from the cube by passing card names as an argument
+  removeFromCube = async (name: string, ...cardNames: string[]) => {
+    const cards = [name, ...cardNames];
     await this.editLink.waitFor();
     await this.editLink.click();
-    await this.cardToAddField.waitFor();
-    await this.cardToAddField.fill(cardName);
-    await this.addButton.waitFor();
-    await this.addButton.click();
+
+    for (const cardName of cards) {
+      await this.clickCard(cardName);
+      await this.removeFromCubeButton.waitFor();
+      await this.removeFromCubeButton.click();
+      await this.page.waitForTimeout(500); // Adjust timeout if necessary
+    }
     await this.saveChangeButton.waitFor();
     await this.saveChangeButton.click();
+    await this.editLink.click();
   };
+
+  // Add cards to cube by passing card names as an argument
+  addToCube = async (name: string, ...cardNames: string[]) => {
+    const cards = [name, ...cardNames];
+    await this.editLink.waitFor();
+    await this.editLink.click();
+
+    for (const cardName of cards) {
+      await this.cardToAddField.fill(cardName);
+      await this.addButton.waitFor();
+      await this.addButton.click();
+      await this.page.waitForTimeout(500); // Adjust timeout if necessary
+    }
+    await this.saveChangeButton.waitFor();
+    await this.saveChangeButton.click();
+    await this.editLink.click();
+  };
+
   // Clicks the Overview link from the Cube List page
   clickOverview = async () => {
     await this.overviewLink.waitFor();

@@ -3,3 +3,8 @@ export const testCardSoldierOfFortune = {
   version: 'ALL-80',
   manaValue: '1',
 };
+export const testCardMoxDiamond = {
+  name: 'Mox Diamond',
+  version: '[sth-138]',
+  manaValue: '0',
+};

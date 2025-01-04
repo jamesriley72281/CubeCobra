@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import * as dotenv from 'dotenv';
 
-import { testCardSoldierOfFortune } from '../playwrightData/cardData';
+import { testCardMoxDiamond, testCardSoldierOfFortune } from '../playwrightData/cardData';
 import { addRemoveCube, existingCubeData, newCubeData } from '../playwrightData/cubeData';
 import { testUser1 } from '../playwrightData/testUsers';
 import { CubeListPage } from '../playwrightPageObjects/CubeListPage';
@@ -54,23 +54,21 @@ test('should open cube from Your Cube dashboard section, then click and validate
   await cubeOverviewPage.validateCubeDescription(existingCubeData.description);
 });
 
-test.only('should add and remove card from cube then validate change log blog post', async ({ page }) => {
+test.only('should add and remove two cards from cube then validate change log blog post', async ({ page }) => {
   await page.goto('/');
 
   const topNavigationPage = new TopNavigationPage(page);
   await topNavigationPage.userLogin({ testUser1 });
 
   const dashboardPage = new DashboardPage(page);
-  await page.pause();
   await dashboardPage.clickCubeFromYourCube(addRemoveCube.title, addRemoveCube.cardCount, addRemoveCube.followerCount);
 
   const cubeOverviewPage = new CubeOverviewPage(page);
   await cubeOverviewPage.clickList();
 
   const cubeListPage = new CubeListPage(page);
-  await cubeListPage.addToCube(testCardSoldierOfFortune.name);
-  await cubeListPage.clickCard(testCardSoldierOfFortune.name);
-  await cubeListPage.removefromCube();
+  await cubeListPage.addToCube(testCardSoldierOfFortune.name, testCardMoxDiamond.name);
+  await cubeListPage.removeFromCube(testCardSoldierOfFortune.name, testCardMoxDiamond.name);
   await cubeListPage.clickOverview();
-  await cubeOverviewPage.validateNuetralChangeLog();
+  await cubeOverviewPage.validateChangeLog(0, 2, 'Mox DiamondSoldier of Fortune');
 });
