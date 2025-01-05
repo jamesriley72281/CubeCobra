@@ -41,7 +41,7 @@
     "setup:local:files": "node scripts/create_local_files.js",
     "setup:local:db": "node --max-old-space-size=8192 scripts/createTables.js",
     "start:dev": "npm start:localstack && npm devstart",
-    "publish": "npm run build && node ./scripts/publish.js"
+    "publish": "npm run build && node publish.js"
   },
   "author": "Gwen Dekker",
   "license": "ISC",
