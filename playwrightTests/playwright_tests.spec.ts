@@ -54,7 +54,7 @@ test('should open cube from Your Cube dashboard section, then click and validate
   await cubeOverviewPage.validateCubeDescription(existingCubeData.description);
 });
 
-test.only('should add and remove two cards from cube then validate change log blog post', async ({ page }) => {
+test('should add and remove two cards from cube then validate change log blog post', async ({ page }) => {
   await page.goto('/');
 
   const topNavigationPage = new TopNavigationPage(page);
